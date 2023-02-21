@@ -1,23 +1,13 @@
 import os
-from dotenv import load_dotenv
+from os.path import join, dirname
+from dotenv import load_dotenv, find_dotenv
 import mysql.connector
 
 # Load the .env file
-load_dotenv()
+env_file = find_dotenv("/.env")
+load_dotenv(env_file)
 
-mydb = mysql.connector.connect(
-    host=os.getenv("DATABASE_HOST"),
-    user=os.getenv("DATABASE_USER"),
-    password=os.getenv("DATABASE_PASSWORD"),
-    database=os.getenv("DATABASE_NAME")
-)
-
-# mydb = mysql.connector.connect(
-#     host='localhost',
-#     user='***',
-#     password='***',
-#     database='***'
-# )
+mydb = mysql.connector.connect(host=os.getenv("DATABASE_HOST"),user=os.getenv("DATABASE_USER"),password=os.getenv("DATABASE_PASSWORD"),database=os.getenv("DATABASE_NAME"))
 
 cursor = mydb.cursor()
 cursor.execute("select @@version")

@@ -17,7 +17,6 @@ bot_status = cycle(["Type in '/bot --help for help!", "Thank you! Have fun!"])
 # Load the .env file
 load_dotenv()
 
-
 # Things to happen on ready
 @bot.event
 async def on_ready():
