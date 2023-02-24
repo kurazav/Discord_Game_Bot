@@ -3,6 +3,7 @@ from discord.ext import commands
 from db_checks import create_user, get_user
 import re
 from discord import app_commands
+import random
 
 
 def check(email):
@@ -43,6 +44,25 @@ class GameCommand(commands.Cog):
                     await interaction.response.send_message(f"You already have an account: {user}", ephemeral=True)
             else:
                 await interaction.response.send_message("Invalid Email!", ephemeral=True)
+
+    @app_commands.command(name="move", description="Move across the Outerlands to find Shelter, Food, Water and other resources!")
+    async def move(self, interaction: discord.Interaction):
+        command_channel = discord.utils.get(interaction.guild.channels, name="🧠┃commands")
+        if interaction.channel.id == command_channel:
+            distance = random.randint(0, 5)
+            await interaction.response.send_message(f"You have barely managed to travel {distance} KM", ephemeral=True)
+            if distance <= 1:
+                resource = random.randint(1, 4)
+                if resource == 1:
+                    resource = "Food"
+                elif resource == 2:
+                    resource = "Water"
+                elif resource == 3:
+                    resource = "Scraps"
+                elif resource == 4:
+                    resource = "Ivory"
+
+                await interaction.response.send_message(f"You have also found {resource}")
 
 
 async def setup(bot):
